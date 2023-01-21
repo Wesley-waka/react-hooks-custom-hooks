@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 function useQuery(url) {
   const [isLoaded, setIsLoaded] = useState(false);
   // rename `posts` to a more generic `data`
-  const [data, setData] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     setIsLoaded(false);
     fetch(url)
       .then((r) => r.json())
-      .then((data) => {
-        setData(data);
+      .then((posts) => {
+        setPosts(posts);
         setIsLoaded(true);
       });
   }, [url]);
@@ -19,7 +19,10 @@ function useQuery(url) {
   // we want to use the side effect whenever the url changes
 
   // return an *object* with the data and isLoaded state
-  return { data, isLoaded };
+  return {
+    posts: posts,
+    isLoaded: isLoaded
+  };
 }
 
 export default useQuery;
